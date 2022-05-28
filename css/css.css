@@ -19,8 +19,8 @@
   position: absolute;
   border-style: solid;
   top: 63%;
-  left: 5%;
-  right: 5%;
+  left: 10%;
+  right: 10%;
   height: 30vh;
   background-color: rgb(188, 192, 192);
   display: inline-flex;
@@ -60,20 +60,53 @@
 .span_timer {
   position: absolute;
   font-size: 6vh;
-  border-style: solid;
   text-align: center;
 }
 
-#prev_button {
+#upload_sound {
+  position: absolute;
   margin-right: 0.5vw;
+  font-size: 90%;
+  bottom: 46%;
+  left: 10%;
+  width: 10%;
+  height: 10%;
+}
+
+#add_new_meal_form {
+  position: absolute;
+  height: 20%;
+  width: 20%;
+  right: 10%;
+
+}
+
+#add_button {
+  position: absolute;
+  font-size: medium;
+  bottom: 46%;
+  right: 10%;
+  margin-left: 0.5vw;
+  width: 10%;
+  height: 10%;
+}
+
+#prev_button {
+  position: absolute;
+  margin-right: 0.5vw;
+  bottom: 6%;
+  left: 2%;
   width: 4%;
-  height: 40%;
+  height: 30%;
 }
 
 #next_button {
+  position: absolute;
+  bottom: 6%;
+  right: 2%;
   margin-left: 0.5vw;
   width: 4%;
-  height: 40%;
+  height: 30%;
 }
 
 .arrow {
@@ -94,4 +127,34 @@ footer {
   bottom: 0px;
   left: 0px;
   text-align: center;
+}
+
+input {
+  width: 15%;
+  margin: 1%;
+}
+
+#add_new_meal_form label{
+  margin: 1%;
+}
+
+#picture {
+  width: 60%;
+}
+
+#submit_but {
+  width: 98%;
+}
+
+#add_new_meal_form {
+  position: absolute;
+  background-color: azure;
+  border-style: solid;
+  top: 32.6%;
+  right: 2%;
+  height: auto;
+}
+
+#add_new_meal_form input:focus {
+  background-color: rgb(151, 210, 229);
 }

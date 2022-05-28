@@ -2,61 +2,58 @@
 <html lang="en">
 
 <head>
-    <title>Simple HTML document</title>
+    <title>Kitchen timer</title>
     <link rel="stylesheet" href="../css/css.css">
+    <link rel="icon" 
+      type="image/jpg" 
+      href="../img/clock.jpg">
 </head>
 
 <body>
     <main id="wrapper">
 
-        <div id="timer">
-        
-        </div>
+        <section>
+            <div id="timer">
+
+            </div>
+        </section>
 
         <img class="arrow" src="../img/arrow.png" alt="">
 
-
-        <div class="cat_container_back" data-actual="1">
-            <button class="timer_button">
+        <section id="cat_cont" class="cat_container_back" data-actual="1">
+            <button id="cat_one" class="timer_button" data-number="1">
                 <img class="timer_button_img" src="../img/duch.jpg" alt="">
             </button>
-            <button class="timer_button">
+            <button id="cat_two" class="timer_button" data-number="2">
                 <img class="timer_button_img" src="../img/micro.jpg" alt="">
             </button>
-            <button class="timer_button">
+            <button id="cat_three" class="timer_button" data-number="3">
                 <img class="timer_button_img" src="../img/pan.jpg" alt="">
             </button>
-        </div>
+        </section>
 
-        <div class="btn_container_back">
-            <button class="timer_button" id="prev_button">
-                <img class="timer_button_img" src="../img/left.jpg" alt="">
-            </button>
-            <button class="timer_button" id="test" data-duration="30000">
-                <img class="timer_button_img" src="../img/chicken.jpg" alt="">
-            </button>
-            <button class="timer_button">
-                <img class="timer_button_img" src="../img/chicken.jpg" alt="">
-            </button>
-            <button class="timer_button">
-                <img class="timer_button_img" src="../img/chicken.jpg" alt="">
-            </button>
-            <button class="timer_button">
-                <img class="timer_button_img" src="../img/chicken.jpg" alt="">
-            </button>
-            <button class="timer_button" id="next_button">
-                <img class="timer_button_img" src="../img/right.jpg" alt="">
-            </button>
+        <button class="timer_button" id="upload_sound">
+            Upload sound
+        </button>
 
-        </div>
+        <button class="timer_button" id="prev_button">
+            <img class="timer_button_img" src="../img/left.jpg" alt="">
+        </button>
+        <button class="timer_button" id="next_button">
+            <img class="timer_button_img" src="../img/right.jpg" alt="">
+        </button>
+
+        <section class="btn_container_back">
+
+        </section>
+
+        <footer class="footer">
+            Webova stranka pro predmet KAJ (c) Yevhen Chaban
+        </footer>
 
     </main>
-    <footer class="footer">
-        Webova stranka pro predmet KAJ (c) Yevhen Chaban
-    </footer>
 
     <script src="../js/buttons.js"></script>
-
 </body>
 
 </html>
