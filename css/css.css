@@ -80,17 +80,17 @@
   animation-duration: 2s;
 }
 
-main > form > div:empty{
+main>form>div:empty {
   height: 0;
   width: 0;
 }
 
-main > form > span:empty{
+main>form>span:empty {
   height: 0;
   width: 0;
 }
 
-main > form > div:not(:empty){
+main>form>div:not(:empty) {
   position: relative;
   margin: 1%;
   width: 80%;
@@ -98,7 +98,7 @@ main > form > div:not(:empty){
   background-color: rgb(240, 199, 199);
 }
 
-main > form > span:not(:empty){
+main>form>span:not(:empty) {
   position: relative;
   margin: 1%;
   width: 100%;
@@ -133,53 +133,97 @@ main > form > span:not(:empty){
   animation-duration: 3s;
 }
 
-#add_new_sound_form input{
+#add_new_sound_form input {
   width: 80%;
 }
 
 /* The animation code */
 @keyframes example {
   0% {
+    -webkit-transform: rotate(0) translateZ(0);
+    -moz-transform: rotate(0);
+    -o-transform: rotate(0);
+    -ms-transform: rotate(0);
     transform: rotate(0);
   }
 
   10% {
+    -webkit-transform: rotate(10deg) translateZ(0);
+    -moz-transform: rotate(10deg);
+    -o-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
     transform: rotate(10deg);
   }
 
   20% {
+    -webkit-transform: rotate(-10deg) translateZ(0);
+    -moz-transform: rotate(-10deg);
+    -o-transform: rotate(-10deg);
+    -ms-transform: rotate(-10deg);
     transform: rotate(-10deg);
   }
 
   30% {
+    -webkit-transform: rotate(8deg) translateZ(0);
+    -moz-transform: rotate(8deg);
+    -o-transform: rotate(8deg);
+    -ms-transform: rotate(8deg);
     transform: rotate(8deg);
   }
 
   40% {
+    -webkit-transform: rotate(-8deg) translateZ(0);
+    -moz-transform: rotate(-8deg);
+    -o-transform: rotate(-8deg);
+    -ms-transform: rotate(-8deg);
     transform: rotate(-8deg);
   }
 
   50% {
+    -webkit-transform: rotate(5deg) translateZ(0);
+    -moz-transform: rotate(5deg);
+    -o-transform: rotate(5deg);
+    -ms-transform: rotate(5deg);
     transform: rotate(5deg);
   }
 
   60% {
+    -webkit-transform: rotate(-5deg) translateZ(0);
+    -moz-transform: rotate(-5deg);
+    -o-transform: rotate(-5deg);
+    -ms-transform: rotate(-5deg);
     transform: rotate(-5deg);
   }
 
   70% {
+    -webkit-transform: rotate(3deg) translateZ(0);
+    -moz-transform: rotate(3deg);
+    -o-transform: rotate(3deg);
+    -ms-transform: rotate(3deg);
     transform: rotate(3deg);
   }
 
   80% {
+    -webkit-transform: rotate(-3deg) translateZ(0);
+    -moz-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg);
     transform: rotate(-3deg);
   }
 
   90% {
-    transform: rotate(-0deg);
+    -webkit-transform: rotate(0deg) translateZ(0);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
+    -webkit-transform: rotate(0deg) translateZ(0);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
     transform: rotate(0deg);
   }
 }
@@ -287,6 +331,7 @@ input {
   width: 15%;
   margin: 1%;
 }
+
 /*
 #add_new_meal_form label {
   margin: 1%;
