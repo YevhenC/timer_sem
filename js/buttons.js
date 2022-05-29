@@ -3,7 +3,7 @@ const wrapper = document.querySelector("#wrapper");
 const timer_container = document.querySelector("#timer");
 const cat_container = document.querySelector("#cat_cont");
 const btn_cont = document.querySelector(".btn_container_back");
-const def_sound_string_path = "./sound/sound.mp3";
+const def_sound_string_path = "sound/sound.mp3";
 var interval = null;
 
 //Button class
@@ -381,10 +381,10 @@ class Aplication {
 
 // Default buttons array
 var buttons = [
-  new Button(5, 4, 3, "./img/chicken.jpg", true),
-  new Button(3600, 2600, 3200, "./img/fish.jpg", true),
-  new Button(1000, 3000, 500, "./img/potato.jpg", true),
-  new Button(1000, 500, 500, "./img/spagg.png", true),
+  new Button(5, 4, 3, "img/chicken.jpg", true),
+  new Button(3600, 2600, 3200, "img/fish.jpg", true),
+  new Button(1000, 3000, 500, "img/potato.jpg", true),
+  new Button(1000, 500, 500, "img/spagg.png", true),
 ];
 
 let db;
