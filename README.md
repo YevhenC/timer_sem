@@ -8,6 +8,8 @@ Projekt je napsaný v Js+Html+Css, nebyl použit žádný framework, předevší
 V projektu jsou nadefinovaná defaultní talcitka a tří kategorií (microwave, pán, oven). Až časovač dobezi přehraje se zvuk, buď defaultní, nebo ten, který uživatel nahraje.
 APlikace si pamatuje stránku, a po otevření se načte na stejné stránce.
 
+Pro vyskouseni u právního tlačítka časové konstanty jsou malé 5,4,3 sekund.
+
 # Požadavky
 
 HTML | Stav | Komentář
