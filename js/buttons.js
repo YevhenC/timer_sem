@@ -4,6 +4,8 @@ const timer_container = document.querySelector("#timer");
 const cat_container = document.querySelector("#cat_cont");
 const btn_cont = document.querySelector(".btn_container_back");
 const def_sound_string_path = "../sound/sound.mp3";
+
+//Button class
 class Button {
   constructor(duritonone, durationtwo, durationtree, url, default_but) {
     this.duritonone = duritonone;
@@ -14,6 +16,7 @@ class Button {
     this.interval = null;
   }
 
+  //Method tha launch timer in timer container
   startTimerListener(e) {
     if (this.interval != null) {
       clearInterval(this.interval);
@@ -28,7 +31,7 @@ class Button {
     timer_container.appendChild(timer_span);
 
     var duration = 1;
-
+    // Choose duration of timer, depends on choosen category
     if (cat_container.dataset.actual == 1) {
       duration = e.currentTarget.dataset.durationone;
     } else if (cat_container.dataset.actual == 2) {
@@ -63,6 +66,7 @@ class Button {
     );
   }
 
+  // Getter for html button element
   get button() {
     //if (this.default_but == true) {
     var button = document.createElement("button");
@@ -82,6 +86,7 @@ class Button {
   }
 }
 
+//Application class
 class Aplication {
   constructor(buttons) {
     this.buttons = buttons;
@@ -101,6 +106,7 @@ class Aplication {
     } else {
       this.startButtonNumber = start;
     }
+    //Init methods
     this.addAddButton();
     this.addUploadSoundButton();
     this.setStaticButtonsListeners();
@@ -108,6 +114,7 @@ class Aplication {
     this.setPageButtons();
   }
 
+  // Change page and redraw buttons
   nextPage() {
     var start = parseInt(this.startButtonNumber);
     var number = 4;
@@ -120,6 +127,7 @@ class Aplication {
     }
   }
 
+  // Change page and redraw buttons
   prevPage() {
     var start = parseInt(this.startButtonNumber);
     var number = 4;
@@ -131,6 +139,7 @@ class Aplication {
     }
   }
 
+  // Setting listeners for next/prev page buttons
   setPageButtons() {
     var next = document.querySelector("#next_button");
     var prev = document.querySelector("#prev_button");
@@ -142,7 +151,7 @@ class Aplication {
     prev.addEventListener("click", prev_listener, false);
   }
 
-  // Method
+  // Method that redraws buttons
   redrawButtons() {
     btn_cont.innerHTML = "";
     var number = 4;
@@ -154,12 +163,14 @@ class Aplication {
     }
   }
 
+  // Method remove adding meal form from dom
   removeForm() {
     var form = document.querySelector("#add_new_meal_form");
     form.remove();
     this.addAddButton();
   }
 
+  // Method remove adding meal form from dom
   removeSoundForm() {
     var form = document.querySelector("#add_new_sound_form");
     form.remove();
@@ -181,6 +192,7 @@ class Aplication {
     form.appendChild(document.createElement("br"));
   }
 
+  // Validation adding meal form
   validateForm(f, s, t, input) {
     var err = document.querySelector("#meal_form_err");
     err.textContent = "";
@@ -209,6 +221,7 @@ class Aplication {
     }
   }
 
+  // Validation uploading form
   validateSoundForm(input) {
     var err = document.querySelector("#sound_form_err");
     if (!input.files[0]) {
@@ -224,6 +237,7 @@ class Aplication {
     }
   }
 
+  // Method that construct and adds uploading sound form
   addSoundForm() {
     var form = document.createElement("form");
     form.id = "add_new_sound_form";
@@ -242,7 +256,6 @@ class Aplication {
 
     var div = document.createElement("div");
     div.id = "sound_form_err";
-    //div.textContent = "Should be string";
     form.appendChild(div);
 
     form.appendChild(document.createElement("br"));
@@ -254,7 +267,6 @@ class Aplication {
     form.appendChild(document.createElement("br"));
 
     var validate = this.validateSoundForm.bind(this, input_file);
-    //var remove = this.removeSoundForm.bind(this);
 
     form.onsubmit = function (e) {
       e.preventDefault();
@@ -271,6 +283,7 @@ class Aplication {
     this.addSoundForm();
   }
 
+  // Method that construct and adds uploading sound button
   addUploadSoundButton() {
     var button = document.createElement("button");
     button.className = "timer_button";
@@ -281,6 +294,7 @@ class Aplication {
     wrapper.appendChild(button);
   }
 
+  // Method that construct and adds new meal form
   addForm() {
     var form = document.createElement("form");
     form.id = "add_new_meal_form";
@@ -294,7 +308,7 @@ class Aplication {
     this.addLabelWithTextInput("d_three", "Duration for pan in seconds:", form);
     var span = document.createElement("span");
     span.id = "meal_form_err";
-    //span.textContent = "Should be string";
+
     form.appendChild(span);
     form.appendChild(document.createElement("br"));
 
@@ -316,7 +330,7 @@ class Aplication {
     var s = document.querySelector("#d_two");
     var t = document.querySelector("#d_three");
     var validate = this.validateForm.bind(this, f, s, t, input_file);
-    //var remove = this.removeForm.bind(this);
+
     form.onsubmit = function (e) {
       e.preventDefault();
       if (validate() == true) {
@@ -330,6 +344,7 @@ class Aplication {
     this.addForm();
   }
 
+  // Method that construct and adds new meal button
   addAddButton() {
     var button = document.createElement("button");
     button.className = "timer_button";
@@ -364,6 +379,7 @@ class Aplication {
   }
 }
 
+// Default buttons array
 var buttons = [
   new Button(5, 400, 300, "../img/chicken.jpg", true),
   new Button(500, 4340, 3, "../img/fish.jpg", true),
@@ -400,6 +416,7 @@ request.onupgradeneeded = function (e) {
   dbReady = true;
 };
 
+//Loading buttons from indexeddb
 function loadButtonsFromDb() {
   let trans = db.transaction(["buttons"], "readwrite");
   let store = trans.objectStore("buttons");
@@ -415,6 +432,7 @@ function loadButtonsFromDb() {
   });
 }
 
+//Uploading button to indexeddb
 function uploadButton(durationone, durationtwo, durationthree) {
   let file = document.querySelector("#picture").files[0];
   var reader = new FileReader();
@@ -446,6 +464,7 @@ function uploadButton(durationone, durationtwo, durationthree) {
   };
 }
 
+//Uploading sound to localStorage
 function uploadSound() {
   const reader = new FileReader();
   reader.onload = function () {
