@@ -1,4 +1,4 @@
-//Definition and initializing of global variables
+//Definition and initializing of global variables and static elements
 const wrapper = document.querySelector("#wrapper");
 const timer_container = document.querySelector("#timer");
 const cat_container = document.querySelector("#cat_cont");
