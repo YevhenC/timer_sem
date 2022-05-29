@@ -4,6 +4,7 @@ const timer_container = document.querySelector("#timer");
 const cat_container = document.querySelector("#cat_cont");
 const btn_cont = document.querySelector(".btn_container_back");
 const def_sound_string_path = "../sound/sound.mp3";
+var interval = null;
 
 //Button class
 class Button {
@@ -18,8 +19,8 @@ class Button {
 
   //Method tha launch timer in timer container
   startTimerListener(e) {
-    if (this.interval != null) {
-      clearInterval(this.interval);
+    if (interval != null) {
+      clearInterval(interval);
     }
     var span = document.querySelector("#span_timer");
     if (span != null) {
@@ -30,21 +31,21 @@ class Button {
     timer_span.className = "span_timer";
     timer_container.appendChild(timer_span);
 
-    var duration = 1;
+    var duration;
     // Choose duration of timer, depends on choosen category
     if (cat_container.dataset.actual == 1) {
-      duration = e.currentTarget.dataset.durationone;
+      duration = parseInt(e.currentTarget.dataset.durationone);
     } else if (cat_container.dataset.actual == 2) {
-      duration = e.currentTarget.dataset.durationtwo;
+      duration = parseInt(e.currentTarget.dataset.durationtwo);
     } else {
-      duration = e.currentTarget.dataset.durationthree;
+      duration = parseInt(e.currentTarget.dataset.durationthree);
     }
 
-    var timer = duration,
-      minutes,
-      seconds;
+    var timer = parseInt(duration);
+    var minutes;
+    var seconds;
 
-    this.interval = setInterval(
+    interval = setInterval(
       function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
@@ -54,13 +55,12 @@ class Button {
 
         timer_span.textContent = minutes + ":" + seconds;
 
-        if (timer == 0) {
+        if (--timer < 0) {
+          timer_span.textContent ="00:00";
           const aud = new Audio(app.sound);
           aud.play();
-          clearInterval(this.interval);
-        } else {
-          --timer;
-        }
+          clearInterval(interval);
+        } 
       }.bind(this),
       1000
     );
@@ -381,10 +381,10 @@ class Aplication {
 
 // Default buttons array
 var buttons = [
-  new Button(5, 400, 300, "../img/chicken.jpg", true),
-  new Button(500, 4340, 3, "../img/fish.jpg", true),
-  new Button(523, 44, 32, "../img/potato.jpg", true),
-  new Button(5312, 444, 543, "../img/spagg.png", true),
+  new Button(5, 4, 3, "../img/chicken.jpg", true),
+  new Button(3600, 2600, 3200, "../img/fish.jpg", true),
+  new Button(1000, 3000, 500, "../img/potato.jpg", true),
+  new Button(1000, 500, 500, "../img/spagg.png", true),
 ];
 
 let db;
