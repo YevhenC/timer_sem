@@ -3,7 +3,7 @@ const wrapper = document.querySelector("#wrapper");
 const timer_container = document.querySelector("#timer");
 const cat_container = document.querySelector("#cat_cont");
 const btn_cont = document.querySelector(".btn_container_back");
-const def_sound_string_path = "./sound/sound.mp3";
+const def_sound_string_path = "../sound/sound.mp3";
 var interval = null;
 
 //Button class
@@ -56,11 +56,11 @@ class Button {
         timer_span.textContent = minutes + ":" + seconds;
 
         if (--timer < 0) {
-          timer_span.textContent ="00:00";
+          timer_span.textContent = "00:00";
           const aud = new Audio(app.sound);
           aud.play();
           clearInterval(interval);
-        } 
+        }
       }.bind(this),
       1000
     );
@@ -93,9 +93,15 @@ class Aplication {
 
     // If sound was uploaded retrieve information from localStorage
     var sound = localStorage.getItem("sound");
+    var audio = document.getElementById("audio");
+    var source = document.getElementById("audioSource");
     if (sound == null) {
       this.sound = def_sound_string_path;
+      source.src = "./sound/sound.mp3";
+      audio.load();
     } else {
+      source.src = sound;
+      audio.load();
       this.sound = sound;
     }
 
@@ -381,10 +387,10 @@ class Aplication {
 
 // Default buttons array
 var buttons = [
-  new Button(5, 4, 3, "./img/chicken.jpg", true),
-  new Button(3600, 2600, 3200, "./img/fish.jpg", true),
-  new Button(1000, 3000, 500, "./img/potato.jpg", true),
-  new Button(1000, 500, 500, "./img/spagg.png", true),
+  new Button(5, 4, 3, "../img/chicken.jpg", true),
+  new Button(3600, 2600, 3200, "../img/fish.jpg", true),
+  new Button(1000, 3000, 500, "../img/potato.jpg", true),
+  new Button(1000, 500, 500, "../img/spagg.png", true),
 ];
 
 let db;
@@ -470,6 +476,13 @@ function uploadSound() {
   reader.onload = function () {
     var str = this.result;
     localStorage.setItem("sound", str);
+
+    var audio = document.getElementById("audio");
+    var source = document.getElementById("audioSource");
+
+    source.src = str;
+    audio.load();
+
     app.sound = str;
     console.log(str);
   };
