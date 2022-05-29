@@ -19,14 +19,14 @@ Validita  | + |
 Fungující v moderních prohlíčečích | + | 
 Semantické značky | + | 
 Grafika - SVG / Canvas | - | 
-Média - Audio/Video | - |
+Média - Audio/Video | + |
 Formulářové prvky | + | 
 Offline aplikace | + | 
 
 CSS | Stav | Popis
 | :--- | ---: | :---:
 Pokročilé selektory | + | css.css line 93
-Vendor prefixy  | - |
+Vendor prefixy  | + |
 CSS3 transformace 2D/3D | + | 2D transformace formulářů
 CSS3 transitions/animations | + | animace tlačítek
 Media queries | - |
