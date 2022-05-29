@@ -3,7 +3,7 @@ const wrapper = document.querySelector("#wrapper");
 const timer_container = document.querySelector("#timer");
 const cat_container = document.querySelector("#cat_cont");
 const btn_cont = document.querySelector(".btn_container_back");
-
+const def_sound_string_path = "../sound/sound.mp3";
 class Button {
   constructor(duritonone, durationtwo, durationtree, url, default_but) {
     this.duritonone = duritonone;
@@ -11,10 +11,13 @@ class Button {
     this.durationthree = durationtree;
     this.url = url;
     this.default_but = default_but;
-    this.el = 5;
+    this.interval = null;
   }
 
   startTimerListener(e) {
+    if (this.interval != null) {
+      clearInterval(this.interval);
+    }
     var span = document.querySelector("#span_timer");
     if (span != null) {
       span.remove();
@@ -23,7 +26,9 @@ class Button {
     timer_span.id = "span_timer";
     timer_span.className = "span_timer";
     timer_container.appendChild(timer_span);
-    var duration;
+
+    var duration = 1;
+
     if (cat_container.dataset.actual == 1) {
       duration = e.currentTarget.dataset.durationone;
     } else if (cat_container.dataset.actual == 2) {
@@ -31,27 +36,31 @@ class Button {
     } else {
       duration = e.currentTarget.dataset.durationthree;
     }
+
     var timer = duration,
       minutes,
       seconds;
-    setInterval(function () {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
 
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
+    this.interval = setInterval(
+      function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
-      timer_span.textContent = minutes + ":" + seconds;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-      if (--timer < 0) {
-        //TODO zvuk
-        //if (x != null) {
-        //x.remove();
-        //}
-        //timer = duration;
-        timer++;
-      }
-    }, 1000);
+        timer_span.textContent = minutes + ":" + seconds;
+
+        if (timer == 0) {
+          const aud = new Audio(app.sound);
+          aud.play();
+          clearInterval(this.interval);
+        } else {
+          --timer;
+        }
+      }.bind(this),
+      1000
+    );
   }
 
   get button() {
@@ -76,8 +85,14 @@ class Button {
 class Aplication {
   constructor(buttons) {
     this.buttons = buttons;
-    // Set Item
-    //localStorage.setItem("startButtonNumber", "Smith");
+
+    // If sound was uploaded retrieve information from localStorage
+    var sound = localStorage.getItem("sound");
+    if (start == null) {
+      this.sound = def_sound_string_path;
+    } else {
+      this.sound = sound;
+    }
 
     // If page was changed retrieve information from localStorage
     var start = localStorage.getItem("startButtonNumber");
@@ -87,11 +102,12 @@ class Aplication {
       this.startButtonNumber = start;
     }
     this.addAddButton();
+    this.addUploadSoundButton();
     this.setStaticButtonsListeners();
     this.redrawButtons();
     this.setPageButtons();
   }
-  
+
   nextPage() {
     var start = parseInt(this.startButtonNumber);
     var number = 4;
@@ -144,6 +160,12 @@ class Aplication {
     this.addAddButton();
   }
 
+  removeSoundForm() {
+    var form = document.querySelector("#add_new_sound_form");
+    form.remove();
+    this.addAddButton();
+  }
+
   addLabelWithTextInput(idVal, textCont, form) {
     var label = document.createElement("label");
     label.htmlFor = idVal;
@@ -159,27 +181,129 @@ class Aplication {
     form.appendChild(document.createElement("br"));
   }
 
-  validateForm() {
-    return true;
+  validateForm(f, s, t, input) {
+    var err = document.querySelector("#meal_form_err");
+    err.textContent = "";
+    if (isNaN(f.value)) {
+      f.style.backgroundColor = "red";
+      err.textContent = "Please fill time in seconds!";
+    }
+    if (isNaN(s.value)) {
+      s.style.backgroundColor = "red";
+      err.textContent = "Please fill time in seconds!";
+    }
+    if (isNaN(t.value)) {
+      t.style.backgroundColor = "red";
+      err.textContent = "Please fill time in seconds!";
+    }
+    if (!input.files[0]) {
+      err.textContent = "Please select a file!";
+      return false;
+    } else {
+      var file = input.files[0];
+      if (file.size > 1000000) {
+        err.textContent = "Size must be under 1 mb!";
+        return false;
+      }
+      return err.textContent == "";
+    }
+  }
+
+  validateSoundForm(input) {
+    var err = document.querySelector("#sound_form_err");
+    if (!input.files[0]) {
+      err.textContent = "Please select a file!";
+      return false;
+    } else {
+      var file = input.files[0];
+      if (file.size > 256000) {
+        err.textContent = "Size must be under 256 kb!";
+        return false;
+      }
+      return true;
+    }
+  }
+
+  addSoundForm() {
+    var form = document.createElement("form");
+    form.id = "add_new_sound_form";
+
+    var label = document.createElement("label");
+    label.htmlFor = "upl_sound";
+    label.textContent = "Please choose new sound for alarm:";
+    var input_file = document.createElement("input");
+    input_file.type = "file";
+    input_file.name = "upl_sound";
+    input_file.id = "upl_sound";
+    input_file.accept = "audio/mp3";
+    form.appendChild(label);
+    form.appendChild(document.createElement("br"));
+    form.appendChild(input_file);
+
+    var div = document.createElement("div");
+    div.id = "sound_form_err";
+    //div.textContent = "Should be string";
+    form.appendChild(div);
+
+    form.appendChild(document.createElement("br"));
+
+    var input = document.createElement("input");
+    input.type = "submit";
+    input.id = "submit__sound_but";
+    form.appendChild(input);
+    form.appendChild(document.createElement("br"));
+
+    var validate = this.validateSoundForm.bind(this, input_file);
+    //var remove = this.removeSoundForm.bind(this);
+
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      if (validate() == true) {
+        uploadSound();
+        this.remove();
+      }
+    };
+
+    wrapper.appendChild(form);
+  }
+
+  addSoundFormListener() {
+    this.addSoundForm();
+  }
+
+  addUploadSoundButton() {
+    var button = document.createElement("button");
+    button.className = "timer_button";
+    button.id = "upload_sound";
+    button.textContent = "Upload sound";
+    var f = this.addSoundFormListener.bind(this);
+    button.addEventListener("click", f, false);
+    wrapper.appendChild(button);
   }
 
   addForm() {
     var form = document.createElement("form");
     form.id = "add_new_meal_form";
 
-    this.addLabelWithTextInput("d_one", "Timer duration for microwave:", form);
-    this.addLabelWithTextInput("d_two", "Timer duration for duchovka:", form);
     this.addLabelWithTextInput(
-      "d_three",
-      "Timer duration for skovorodka:",
+      "d_one",
+      "Duration for microwave in seconds:",
       form
     );
-    var input = document.createElement("input");
-    input.type = "file";
-    input.name = "picture";
-    input.id = "picture";
-    input.accept = "image/png, image/jpeg";
-    form.appendChild(input);
+    this.addLabelWithTextInput("d_two", "Duration for oven in seconds:", form);
+    this.addLabelWithTextInput("d_three", "Duration for pan in seconds:", form);
+    var span = document.createElement("span");
+    span.id = "meal_form_err";
+    //span.textContent = "Should be string";
+    form.appendChild(span);
+    form.appendChild(document.createElement("br"));
+
+    var input_file = document.createElement("input");
+    input_file.type = "file";
+    input_file.name = "picture";
+    input_file.id = "picture";
+    input_file.accept = "image/png, image/jpeg";
+    form.appendChild(input_file);
     form.appendChild(document.createElement("br"));
 
     var input = document.createElement("input");
@@ -187,20 +311,19 @@ class Aplication {
     input.id = "submit_but";
     form.appendChild(input);
     form.appendChild(document.createElement("br"));
-
-    var validate = this.validateForm.bind(this);
-    form.onsubmit = function () {
+    wrapper.appendChild(form);
+    var f = document.querySelector("#d_one");
+    var s = document.querySelector("#d_two");
+    var t = document.querySelector("#d_three");
+    var validate = this.validateForm.bind(this, f, s, t, input_file);
+    //var remove = this.removeForm.bind(this);
+    form.onsubmit = function (e) {
+      e.preventDefault();
       if (validate() == true) {
-        uploadButton(
-          document.querySelector("#d_one").value,
-          document.querySelector("#d_two").value,
-          document.querySelector("#d_three").value
-        );
-        this.removeForm();
+        uploadButton(f.value, s.value, t.value);
+        this.remove();
       }
     };
-
-    wrapper.appendChild(form);
   }
 
   addFormListener() {
@@ -219,6 +342,14 @@ class Aplication {
 
   changeActualOfCatContainerNumberListener(e) {
     cat_container.dataset.actual = e.currentTarget.dataset.number;
+    var choosed = document.querySelector("#choosed_cat");
+    if (e.currentTarget.dataset.number == 1) {
+      choosed.className = "cat_one";
+    } else if (e.currentTarget.dataset.number == 2) {
+      choosed.className = "cat_two";
+    } else {
+      choosed.className = "cat_three";
+    }
   }
 
   setStaticButtonsListeners() {
@@ -234,10 +365,10 @@ class Aplication {
 }
 
 var buttons = [
-  new Button(5, 4, 3, "../img/chicken.jpg", true),
-  new Button(5, 4, 3, "../img/chicken.jpg", true),
-  new Button(5, 4, 3, "../img/chicken.jpg", true),
-  new Button(5, 4, 3, "../img/chicken.jpg", true),
+  new Button(5, 400, 300, "../img/chicken.jpg", true),
+  new Button(500, 4340, 3, "../img/fish.jpg", true),
+  new Button(523, 44, 32, "../img/potato.jpg", true),
+  new Button(5312, 444, 543, "../img/spagg.png", true),
 ];
 
 let db;
@@ -313,6 +444,18 @@ function uploadButton(durationone, durationtwo, durationthree) {
       console.log("data stored");
     };
   };
+}
+
+function uploadSound() {
+  const reader = new FileReader();
+  reader.onload = function () {
+    var str = this.result;
+    localStorage.setItem("sound", str);
+    app.sound = str;
+    console.log(str);
+  };
+  var input_fil = document.querySelector("#upl_sound");
+  reader.readAsDataURL(input_fil.files[0]);
 }
 
 var app = new Aplication(buttons);
