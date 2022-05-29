@@ -93,7 +93,7 @@ class Aplication {
 
     // If sound was uploaded retrieve information from localStorage
     var sound = localStorage.getItem("sound");
-    if (start == null) {
+    if (sound == null) {
       this.sound = def_sound_string_path;
     } else {
       this.sound = sound;
