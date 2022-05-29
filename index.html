@@ -13,18 +13,18 @@
     <main id="wrapper">
         <div>Actual alarm sound:</div><br />
         <audio id="audio" controls>
-            <source id="audioSource" src=""></source>
+            <source id="audioSource" src="./sound/sound.mp3" />
           Your browser does not support the audio element.
           </audio>
         <!-- Section with timer container -->
-        <section>
+        <div id="timer_con">
             <div id="timer">
 
             </div>
-        </section>
+        </div>
 
         <!-- Section with category buttons container -->
-        <section id="cat_cont" class="cat_container_back" data-actual="1">
+        <div id="cat_cont" class="cat_container_back" data-actual="1">
             <!-- Div that indicates choosed category -->
             <div id="choosed_cat" class="cat_one">
 
@@ -39,7 +39,7 @@
             <button id="cat_three" class="timer_button" data-number="3">
                 <img class="timer_button_img" src="./img/pan.jpg" alt="">
             </button>
-        </section>
+        </div>
         <!-- Previus page button -->
         <button class="timer_button" id="prev_button">
             <img class="timer_button_img" src="./img/left.jpg" alt="">
@@ -50,9 +50,9 @@
         </button>
 
         <!-- Section with timer buttons container -->
-        <section class="btn_container_back">
+        <div class="btn_container_back">
 
-        </section>
+        </div>
 
         <footer class="footer">
             Webova stranka pro predmet KAJ (c) Yevhen Chaban
