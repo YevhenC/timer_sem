@@ -3,7 +3,7 @@ const wrapper = document.querySelector("#wrapper");
 const timer_container = document.querySelector("#timer");
 const cat_container = document.querySelector("#cat_cont");
 const btn_cont = document.querySelector(".btn_container_back");
-const def_sound_string_path = "../sound/sound.mp3";
+const def_sound_string_path = "./sound/sound.mp3";
 var interval = null;
 
 //Button class
